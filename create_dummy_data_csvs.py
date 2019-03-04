@@ -49,9 +49,9 @@ class DummyGenerator:
         date_1 = julian.to_jd(date_1, fmt='jd')
         date_2 = julian.to_jd(date_2, fmt='jd')
 
-        for _ in range(18000000):
+        for _ in range(1800000):
             csvData.append([date_1, self.random_text_generator()])
-        for _ in range(18000000, 20000000):
+        for _ in range(1800000, 2000000):
             csvData.append([date_2, self.random_text_generator()])
         self.writeCSV("exam2.csv", csvData)
 
