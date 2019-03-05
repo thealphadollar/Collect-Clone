@@ -8,38 +8,41 @@ from .db_handler import DBHandler
 
 ex1 = Blueprint('example1', __name__, url_prefix='/example1')
 
-@ex1.route('/', methods=('GET', 'POST'))
+@ex1.route('/')
 def example1_root():
     """
-    handles the endpoint for example 1
+    handles the endpoint for example 1 uploading processing
+    """
+    return render_template("example1_get.html")
+
+@ex1.route('/upload', methods=["POST"])
+def upload():
+    """
+    endpoint to handle upload of the csv file
     """
 
-    if request.method == "POST":
-        """
-        Before upload, raw page
-        """
-        f = request.files['csv_file']
-        fileStream = io.StringIO(f.stream.read().decode('utf-8'), newline=None)
+    f = request.files.get('csv_data', None)
 
-        try:
-            DataHandler.add_exam1_data(fileStream)
-        except Exception as err:
-            print(err)
-            return redirect(url_for(example1_root))
-        
-        return render_template("example1_post.html")
+    if f is None:
+        flash("Invalid file uploaded!")
+        return redirect("/example1")
 
-    elif request.method == "GET":
-        """
-        to handle upload request
-        """
-        return render_template("example1_get.html")
+    fileStream = io.StringIO(f.stream.read().decode('utf-8'), newline=None)
+
+    try:
+        DBHandler.add_exam1_data(fileStream)
+    except KeyError as _:
+        flask("Invalid CSV data!")
+        return redirect("/example1")
+    
+    return render_template("example1_post.html")    
+
 
 @ex1.route('/clear')
-def clear_db:
+def clear_db():
     """
     clears the example 1 database
     """
-    DBHandler.trucate('example1')
+    DBHandler.truncate('example1')
     flash("example1 table cleared!")
-    return redirect(url_for(example1_root))
+    return redirect("/example1")

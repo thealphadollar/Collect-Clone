@@ -3,6 +3,7 @@ contains methods to handle database and adjoining operations
 """
 
 import os
+import csv
 import sqlite3
 from contextlib import contextmanager
 
@@ -29,7 +30,7 @@ class DBHandler:
 
         self.load_dummy_data()
         
-
+    @staticmethod
     @contextmanager
     def connect():
         """
@@ -77,7 +78,9 @@ class DBHandler:
 
         with DBHandler.connect() as conn:
             cur = conn.cursor()
-            cur.execute("TRUNCATE TABLE {}".format(table_name))
+            cur.execute("DELETE FROM {};".format(table_name))
+            conn.commit()
+            cur.execute("VACUUM;")
             conn.commit()
 
     def load_dummy_data(self):
@@ -85,8 +88,8 @@ class DBHandler:
         loads data for example 3 from the dummy data exam2.csv
         """
 
-        with open(EXAMPLE_2_DUMMY_DATA, 'rb') as csvFile:
-            dr = csv.DictReader(csvfile)
+        with open(EXAMPLE_2_DUMMY_DATA, 'r') as csvFile:
+            dr = csv.DictReader(csvFile)
             to_db = [(x['date'], x['data']) for x in dr]
         
         with self.connect() as conn:

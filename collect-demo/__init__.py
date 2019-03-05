@@ -5,8 +5,7 @@ initialization file containing the flask APP class
 
 import os
 
-from flask import Flask
-from flask import render_template, url_for
+from flask import Flask, render_template, url_for, request, redirect
 
 from .config import BasicConfig
 from .db_handler import DBHandler
@@ -24,11 +23,12 @@ def create_app():
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_object(BasicConfig)
     app.config.from_mapping(
-        DATABASE=os.path.join(app.instance_path, 'demo.sqlite')
+        DATABASE=os.path.join(os.path.expanduser('~'), 'demo.sqlite')
     )
+    # context intialized early to setup database and other related services
+    app.app_context().push()
 
     # TODO: uncomment below code for final testing
-
     # initialize database
     flask_db = DBHandler()
 
@@ -46,11 +46,11 @@ def create_app():
         if request.method == "GET":
             return render_template('main.html')
         elif request.method == "POST":
-            if request.form['example_number'] == 1:
-                return redirect(url_for(example1_root))
-            elif request.form['example_number'] == 2:
-                return redirect(url_for(example2_root))
+            if int(request.form['example_number']) == 1:
+                return redirect('/example1')
+            elif int(request.form['example_number']) == 2:
+                return redirect('/example2')
             else:
-                return redirect(url_for(example3_root))
+                return redirect('/example3')
 
     return app
