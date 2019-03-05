@@ -30,10 +30,10 @@ def create_app():
     # TODO: uncomment below code for final testing
 
     # initialize database
-    # flask_db = DBHandler()
+    flask_db = DBHandler()
 
     # adding blueprints
-    # app.register_blueprint(ex1)
+    app.register_blueprint(ex1)
 
     try:
         os.makedirs(app.instance_path)

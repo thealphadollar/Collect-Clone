@@ -50,6 +50,35 @@ class DBHandler:
 
         if db is not None:
             db.close()
+    
+    def add_exam1_data(csvStream):
+        """
+        adds data uploaded via csv for example1 to the table
+        
+        :param csvStream: uploaded csv file
+        :type csvStream: FileStream
+        """
+
+        dr = csv.DictReader(csvStream)
+        to_db = [(x['data1'], x['data2'], x['data3']) for x in dr]
+
+        with DBHandler.connect() as conn:
+            cur = conn.cursor()
+            cur.executemany('INSERT INTO example1 (data1, data2, data3) VALUES (?, ?, ?);', to_db)
+            conn.commit()
+
+    def truncate(table_name):
+        """
+        removes all the rows of the specified table
+
+        :param table_name: name of the table
+        :type table_name: string
+        """
+
+        with DBHandler.connect() as conn:
+            cur = conn.cursor()
+            cur.execute("TRUNCATE TABLE {}".format(table_name))
+            conn.commit()
 
     def load_dummy_data(self):
         """
