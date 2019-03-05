@@ -9,6 +9,8 @@ from flask import Flask
 from flask import render_template
 
 from .config import BasicConfig
+from .db_handler import DBHandler
+from .example1 import ex1
 
 
 def create_app():
@@ -25,6 +27,14 @@ def create_app():
         DATABASE=os.path.join(app.instance_path, 'demo.sqlite')
     )
 
+    # TODO: uncomment below code for final testing
+
+    # initialize database
+    # flask_db = DBHandler()
+
+    # adding blueprints
+    # app.register_blueprint(ex1)
+
     try:
         os.makedirs(app.instance_path)
     except OSError as err:
@@ -33,6 +43,6 @@ def create_app():
 
     @app.route('/')
     def root():
-        pass
+        return render_template('main.html')
 
     return app
