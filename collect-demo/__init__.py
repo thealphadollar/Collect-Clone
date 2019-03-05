@@ -6,7 +6,7 @@ initialization file containing the flask APP class
 import os
 
 from flask import Flask
-from flask import render_template
+from flask import render_template, url_for
 
 from .config import BasicConfig
 from .db_handler import DBHandler
@@ -41,8 +41,16 @@ def create_app():
         print(err)
         print("Failed to create directory: insufficient permissions or already exist!")
 
-    @app.route('/')
+    @app.route('/', methods=["POST", "GET"])
     def root():
-        return render_template('main.html')
+        if request.method == "GET":
+            return render_template('main.html')
+        elif request.method == "POST":
+            if request.form['example_number'] == 1:
+                return redirect(url_for(example1_root))
+            elif request.form['example_number'] == 2:
+                return redirect(url_for(example2_root))
+            else:
+                return redirect(url_for(example3_root))
 
     return app

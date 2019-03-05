@@ -19,6 +19,9 @@ class DBHandler:
     """
     
     def __init__(self):
+        """
+        initializes database system and load dummy data for example 3
+        """
 
         with self.connect() as conn:
             with current_app.open_resource('init.sql') as f:
@@ -29,6 +32,11 @@ class DBHandler:
 
     @contextmanager
     def connect():
+        """
+        context manager that yields a connection to the database and closes
+        it as soon as the context ends
+        """
+
         if 'db' not in g:
             g.db = sqlite3.connect(
                 current_app.config['DATABASE'],
@@ -44,6 +52,10 @@ class DBHandler:
             db.close()
 
     def load_dummy_data(self):
+        """
+        loads data for example 3 from the dummy data exam2.csv
+        """
+
         with open(EXAMPLE_2_DUMMY_DATA, 'rb') as csvFile:
             dr = csv.DictReader(csvfile)
             to_db = [(x['date'], x['data']) for x in dr]
