@@ -9,10 +9,44 @@ The following tech-stack has been used in the process:
 - Flask
 - Gunicorn
 - Sqlite 3
-- 
+- HTML
+- Heroku [https://collect-demo.herokuapp.com/]
 
+There are other libraries used for minor purposes. For e.g. pylint has been used for linting and code sanitization purposes.
+
+## Documentation
+
+The code is aptly documented with python doc-strings that are the best way to provide documentation in a python project. They can be used to create a web documentation using Sphinx or any similar service.
+
+### To Run
+
+#### Without Docker
+
+Follow the below steps to run the REST API:
+
+- Install Python 3.7 and pip
+- `pip install pipenv`
+- `cd /path/to/project`
+- `pipenv install --dev`
+- `gunicorn collect-demo.wsgi:app`
+- Access the endpoints on 127.0.0.1:8000
+
+NOTE: The above instructions were tested on Debian Stretch with Python 3.7.2
+
+#### With Docker
+
+The program has been dockerised for ease of deployment. This is the easier of the two methods in which the program can be accessed.
+
+- Install docker and docker-compose
+- `cd /path/to/project/`
+- `docker-compose up`  # this will build only the first time, to rebuild add `--build`
+- Access the endpoints on 127.0.0.1:5000
 
 ## Caveats
+
+#### Deployment on Heroku is non-functional
+
+I had planned to make a separate version of the application for Heroku which would take remote database and hence would be able to work on heroku server but was not able to find time for the same.
 
 #### Incomplete Work
 
