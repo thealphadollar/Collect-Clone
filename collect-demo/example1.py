@@ -37,7 +37,7 @@ def upload():
     try:
         DBHandler.add_exam1_data(fileStream)
     except KeyError as _:
-        flask("Invalid CSV data!")
+        flash("Invalid CSV data!")
         return redirect("/example1")
     
     return render_template("example1_post.html")    

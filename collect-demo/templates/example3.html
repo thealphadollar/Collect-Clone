@@ -1,0 +1,15 @@
+<html>
+    <head>
+        <title>Example3 | Collect-Demo</title>
+    </head>
+    <body>
+        <div>
+            Upload team details!
+            <form action="/example3/upload" enctype="multipart/form-data" method="post">
+                <input type="file" name="team_data" id="team_data" accept=".csv">
+                <input type="submit">
+            </form>
+        </div>
+    </body>
+    <script type='text/javascript' src="{{ url_for('static', filename="progress.js") }}"></script>
+</html>

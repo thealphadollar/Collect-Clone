@@ -114,6 +114,23 @@ class DBHandler:
 
         return csv_data
 
+    @staticmethod
+    def add_team_data(csvStream):
+        """
+        adds data uploaded via csv for example3 to the table
+        
+        :param csvStream: uploaded csv file
+        :type csvStream: FileStream
+        """
+
+        dr = csv.DictReader(csvStream)
+        to_db = [(x['name'], x['phone']) for x in dr]
+
+        with DBHandler.connect() as conn:
+            cur = conn.cursor()
+            cur.executemany('INSERT INTO example3 (name, phone) VALUES (?, ?);', to_db)
+            conn.commit()
+
     def load_dummy_data(self):
         """
         loads data for example 3 from the dummy data exam2.csv
