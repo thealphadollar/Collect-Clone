@@ -1,0 +1,7 @@
+.idea
+.vscode
+instance
+*.env
+.gitignore
+create_dummy_data_csvs.py
+README.md

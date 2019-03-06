@@ -1,8 +1,23 @@
 # Collect-Clone
 Repo For Task given by @SocialCops for SE Summer Intern
 
+## TechStack
+
+The following tech-stack has been used in the process:
+
+- Python 3.7
+- Flask
+- Gunicorn
+- Sqlite 3
+- 
+
 
 ## Caveats
+
+#### Incomplete Work
+
+Due to academic activities and campus involvements, I devoted as much as time possible and completed the backend of the application but was not able to work on the
+frontend and finishing of the task.
 
 
 #### Using In-built Sqlite
