@@ -6,9 +6,11 @@ import os
 import csv
 import sqlite3
 from contextlib import contextmanager
+from datetime import datetime
 
 from flask import current_app, g
 from flask.cli import with_appcontext
+from julian import to_jd, from_jd
 
 EXAMPLE_2_DUMMY_DATA = os.path.join(os.path.dirname(os.path.relpath(__file__)),
                                     'dummy-input', 'exam2.csv')
@@ -52,6 +54,7 @@ class DBHandler:
         if db is not None:
             db.close()
     
+    @staticmethod
     def add_exam1_data(csvStream):
         """
         adds data uploaded via csv for example1 to the table
@@ -68,6 +71,7 @@ class DBHandler:
             cur.executemany('INSERT INTO example1 (data1, data2, data3) VALUES (?, ?, ?);', to_db)
             conn.commit()
 
+    @staticmethod
     def truncate(table_name):
         """
         removes all the rows of the specified table
@@ -82,6 +86,33 @@ class DBHandler:
             conn.commit()
             cur.execute("VACUUM;")
             conn.commit()
+    
+    @staticmethod
+    def fetch_beyond(date):
+        """
+        fetches all rows from the table example2 which are beyond the given date
+    
+        :param date: send entries greater than or equal to this date
+        :type date: Datetime.date
+        :return: csv formatted string of the relevant database entries
+        :rtype: string
+        """
+
+        value = to_jd(datetime.strptime(date, "%Y-%m-%d"))
+        csv_data = "id,date,data\n"
+        try:
+            with DBHandler.connect() as conn:
+                cur = conn.execute("SELECT * FROM example2 WHERE date >= {}".format(value))
+                raw_data = cur.fetchall()
+        except sqlite3.Error as err:
+            print(err)
+        
+        for row in raw_data:
+            new_row = [i for i in row]
+            new_row[1] = from_jd(new_row[1], fmt="jd")
+            csv_data = csv_data + ",".join([str(i) for i in new_row]) + "\n"
+
+        return csv_data
 
     def load_dummy_data(self):
         """

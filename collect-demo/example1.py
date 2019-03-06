@@ -1,3 +1,8 @@
+"""
+contains all the methods required for managing example 1
+"""
+
+
 import io
 
 from flask import (

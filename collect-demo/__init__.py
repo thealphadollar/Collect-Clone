@@ -10,6 +10,7 @@ from flask import Flask, render_template, url_for, request, redirect
 from .config import BasicConfig
 from .db_handler import DBHandler
 from .example1 import ex1
+from .example2 import ex2
 
 
 def create_app():
@@ -34,6 +35,7 @@ def create_app():
 
     # adding blueprints
     app.register_blueprint(ex1)
+    app.register_blueprint(ex2)
 
     try:
         os.makedirs(app.instance_path)
