@@ -2,7 +2,6 @@
 initialization file containing the flask APP class
 """
 
-
 import os
 
 from flask import Flask, render_template, url_for, request, redirect
@@ -47,6 +46,13 @@ def create_app():
 
     @app.route('/', methods=["POST", "GET"])
     def root():
+        """
+        main page to provide and handle all the three examples choices.
+        
+        :return: main page [GET] or example page [POST]
+        :rtype: Flask.template
+        """
+
         if request.method == "GET":
             return render_template('main.html')
         elif request.method == "POST":

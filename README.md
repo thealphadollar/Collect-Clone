@@ -16,7 +16,7 @@ There are other libraries used for minor purposes. For e.g. pylint has been used
 
 ## Documentation
 
-The code is aptly documented with python doc-strings that are the best way to provide documentation in a python project. They can be used to create a web documentation using Sphinx or any similar service.
+The code is aptly documented with python doc-strings that are the best way to provide documentation in a python project. They can be used to create web documentation using Sphinx or any similar service.
 
 ### To Run
 
@@ -46,12 +46,13 @@ The program has been dockerised for ease of deployment. This is the easier of th
 
 #### Deployment on Heroku is non-functional
 
-I had planned to make a separate version of the application for Heroku which would take remote database and hence would be able to work on heroku server but was not able to find time for the same.
+I had planned to make a separate version of the application for Heroku which would take a remote database and hence would be able to work on Heroku server but was not able to find time for the same.
 
 #### Incomplete Work
 
-Due to academic activities and campus involvements, I devoted as much as time possible and completed the backend of the application but was not able to work on the
-frontend and finishing of the task.
+Due to academic activities and campus involvements, I devoted as much as time possible and completed the backend of the application but was not able to work on the frontend and finishing of the task.
+
+The upload bar and cancellation feature in example 3 have not been implemented as well, the bare-bone code is present but was not able to integrate the same into Python application before the expiry of the deadline.
 
 
 #### Using In-built Sqlite
@@ -59,10 +60,10 @@ frontend and finishing of the task.
 Since it is convenient to use the in-built database handler,
 the project uses sqlite3 from python. This is convenient in case of projects
 with long but less number of write requests; once the number of requests
-increase, the database slows down since the writes happens sequentially.
+increases, the database slows down since the writes happen sequentially.
 
 #### Less Data In Example 2
 
-Instead of the specified 20 million rows, dummy data for exmaple 2 has 2 million rows because of the limit github imposes on uploaded file's size.
+Instead of the specified 20 million rows, dummy data for example 2 has 2 million rows because of the limit GitHub imposes on uploaded file's size.
 
 We could use something like Git-Large_File manager but then it adds on unnecessary complexity in the git management.
